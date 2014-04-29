@@ -8,7 +8,7 @@
  * @category Awesomeness
  * @package  Twitter-API-PHP
  * @author   James Mallison <me@j7mbo.co.uk>
- * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @license  MIT License
  * @link     http://github.com/j7mbo/twitter-api-php
  */
 class TwitterAPIExchange
@@ -171,11 +171,11 @@ class TwitterAPIExchange
     }
     
     /**
-     * Perform the acual data retrieval from the API
+     * Perform the actual data retrieval from the API
      * 
      * @param boolean $return If true, returns data.
      * 
-     * @return json If $return param is true, returns json data.
+     * @return string json If $return param is true, returns json data.
      */
     public function performRequest($return = true)
     {
@@ -193,7 +193,9 @@ class TwitterAPIExchange
             CURLOPT_HTTPHEADER => $header,
             CURLOPT_HEADER => false,
             CURLOPT_URL => $this->url,
-            CURLOPT_RETURNTRANSFER => true
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 10,
+			CURLOPT_SSL_VERIFYPEER => false,
         );
 
         if (!is_null($postfields))
@@ -221,7 +223,7 @@ class TwitterAPIExchange
      * 
      * @param string $baseURI
      * @param string $method
-     * @param string $params
+     * @param array $params
      * 
      * @return string Built base string
      */
