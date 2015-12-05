@@ -261,7 +261,7 @@ class BorosTwitter {
 			if( !empty($this->tweets) ){
 				// debug
 				if( defined('WP_DEBUG') AND WP_DEBUG === true OR $this->config['debug'] == true ){
-					pre($this->tweets, '$this->tweets');
+					pre($this->tweets, '$this->tweets', false);
 				}
 			?>
 			<div class="twitter_box">
@@ -397,6 +397,34 @@ function twitter_links( $text ) {
 
 add_action( 'widgets_init', create_function( '', 'register_widget("boros_widget_twitter");' ) );
 class boros_widget_twitter extends WP_Widget {
+	
+	function __construct(){
+		parent::__construct(
+			'boros_widget_twitter', // Base ID
+			'Twitter', // Name
+			array( 'description' =>'Widget de Twitter', ) // Args
+		);
+		
+		//// opções do widget que será aplicado no frontend
+		//$widget_ops = array(
+		//	'classname' => 'boros_widget_twitter', 
+		//	'description' => 'Widget de Twitter', 
+		//	'width' => 600,
+		//);
+		//
+		//// opções do controle
+		//$control_ops = array();
+		///** MODELO
+		//$control_ops = array(
+		//	'width' => 300,
+		//	'height' => 350,
+		//	'id_base' => 'sidebar_home'
+		//);/**/
+		//
+		//// registrar o widget
+		//$this->WP_Widget( 'boros_widget_twitter', 'Widget de Twitter', $widget_ops, $control_ops );
+	}
+	
 	function boros_widget_twitter(){
 		// opções do widget que será aplicado no frontend
 		$widget_ops = array(
@@ -417,6 +445,7 @@ class boros_widget_twitter extends WP_Widget {
 		// registrar o widget
 		$this->WP_Widget( 'boros_widget_twitter', 'Widget de Twitter', $widget_ops, $control_ops );
 	}
+	
 	function widget($args, $instance){
 		extract($args);
 		
@@ -427,6 +456,7 @@ class boros_widget_twitter extends WP_Widget {
 			echo '<div class="twitter_box"><p class="txt_error">Twitter widget desabilitado.</p></div>';
 		echo $after_widget;
 	}
+	
 	function form($instance){
 		// sempre limpar os valores vazios
 		$instance = array_filter($instance);
@@ -519,6 +549,7 @@ class boros_widget_twitter extends WP_Widget {
 			</p>
 		<?php
 	}
+	
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 		$instance['id'] = $new_instance['id'];
