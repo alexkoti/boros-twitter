@@ -357,7 +357,9 @@ if ( defined('WP_DEBUG') && WP_DEBUG ){
 		$feed->enable_cache(false);
 	}
 	add_action( 'wp_feed_options', 'do_not_cache_feeds' );
-	add_filter( 'wp_feed_cache_transient_lifetime', create_function( '$a', 'return 1;' ) );
+	add_filter('wp_feed_cache_transient_lifetime', function($a){
+        return 1;
+    });
 }
 
 
@@ -395,7 +397,9 @@ function twitter_links( $text ) {
 }
 
 
-add_action( 'widgets_init', create_function( '', 'register_widget("boros_widget_twitter");' ) );
+add_action('widgets_init', function(){
+    register_widget("boros_widget_twitter");
+});
 class boros_widget_twitter extends WP_Widget {
 	
 	function __construct(){
